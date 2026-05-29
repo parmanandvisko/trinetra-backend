@@ -3,10 +3,11 @@ const { success, error, paginated } = require('../../utils/response')
 
 const getAll = async (req, res) => {
   try {
-    const { page = 1, limit = 10, category, search, isFeature } = req.query
+    const { page = 1, limit = 10, category, search, isFeature, isActive } = req.query
     const filter = {}
     if (category) filter.category = category
     if (isFeature !== undefined) filter.isFeature = isFeature === 'true'
+    if (isActive !== undefined) filter.isActive = isActive === 'true'
     if (search) filter.name = { $regex: search, $options: 'i' }
     const total = await Destination.countDocuments(filter)
     const destinations = await Destination.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
