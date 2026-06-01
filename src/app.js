@@ -11,6 +11,7 @@ const categoryRoutes = require('./modules/category/category.routes')
 const contactRoutes = require('./modules/contact/contact.routes')
 const bookingRoutes = require('./modules/booking/booking.routes')
 const dashboardRoutes = require('./modules/dashboard/dashboard.routes')
+const settingsRoutes = require('./modules/settings/settings.routes')
 
 const app = express()
 
@@ -35,6 +36,7 @@ app.use('/api/categories', categoryRoutes)
 app.use('/api/contacts', contactRoutes)
 app.use('/api/bookings', bookingRoutes)
 app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/settings', settingsRoutes)
 
 app.get('/api/health', (_, res) => res.json({ status: 'OK', message: 'Trinetra API is running' }))
 

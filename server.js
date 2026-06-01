@@ -6,6 +6,8 @@ const connectDB = require('./src/config/db')
 
 const PORT = process.env.PORT || 5000
 
+console.log(process.env.MONGODB_URI);
+
 
 async function startServer() {
   try {
