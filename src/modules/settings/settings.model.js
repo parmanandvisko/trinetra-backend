@@ -11,10 +11,18 @@ const settingsSchema = new mongoose.Schema({
   email: { type: String, default: 'info@trinetraglobalholidays.com' },
   address: { type: String, default: '708, Mohan Nano Estates, Ambernath West, India 421505' },
   logoUrl: { type: String, default: '' },
+  gstNumber: { type: String, default: '' },
+  businessRegistration: { type: String, default: '' },
+  googleReviews: { type: String, default: '' },
+  happyTravelers: { type: String, default: '50+' },
+  securePaymentBadge: { type: String, default: 'Secure Payments' },
+  customerPhotos: [{ type: String }],
+  customerTestimonials: [{ name: String, location: String, text: String, img: String }],
 
   // Social Links
   facebook: { type: String, default: '' },
   instagram: { type: String, default: '' },
+  linkedin: { type: String, default: '' },
   twitter: { type: String, default: '' },
   youtube: { type: String, default: '' },
 

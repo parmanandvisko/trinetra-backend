@@ -1,0 +1,37 @@
+const router = require('express').Router()
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
+const { protect } = require('../../middleware/auth.middleware')
+const { success, error } = require('../../utils/response')
+
+const uploadDir = path.join(process.cwd(), 'uploads')
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true })
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => cb(null, uploadDir),
+  filename: (_, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase()
+    const name = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
+    cb(null, name)
+  },
+})
+
+const fileFilter = (_, file, cb) => {
+  if (file.mimetype.startsWith('image/')) return cb(null, true)
+  cb(new Error('Only image files are allowed'))
+}
+
+const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } })
+
+router.post('/image', protect, upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) return error(res, 'Image file is required', 400)
+    const baseUrl = `${req.protocol}://${req.get('host')}`
+    return success(res, { url: `${baseUrl}/uploads/${req.file.filename}` }, 'Image uploaded', 201)
+  } catch (err) {
+    return error(res, err.message)
+  }
+})
+
+module.exports = router
