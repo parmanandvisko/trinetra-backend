@@ -4,7 +4,6 @@ const packageSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },
     destination: { type: mongoose.Schema.Types.ObjectId, ref: 'Destination' },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     duration: { type: String, required: true },
     price: { type: Number, required: true },
     originalPrice: { type: Number },

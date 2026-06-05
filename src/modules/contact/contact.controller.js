@@ -13,6 +13,7 @@ const getAll = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    if (!req.body.name || !req.body.phone) return error(res, 'Name and mobile number are required', 400)
     const contact = await Contact.create(req.body)
     return success(res, contact, 'Message sent successfully', 201)
   } catch (err) { return error(res, err.message) }

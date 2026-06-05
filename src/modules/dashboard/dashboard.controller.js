@@ -3,19 +3,17 @@ const Destination = require('../destination/destination.model')
 const Package = require('../package/package.model')
 const Contact = require('../contact/contact.model')
 const Booking = require('../booking/booking.model')
-const Category = require('../category/category.model')
 const Search = require('../search/search.model')
 const { success, error } = require('../../utils/response')
 
 const getStats = async (req, res) => {
   try {
-    const [blogs, destinations, packages, contacts, bookings, categories, searches, newContacts, pendingBookings, confirmedBookings] = await Promise.all([
+    const [blogs, destinations, packages, contacts, bookings, searches, newContacts, pendingBookings, confirmedBookings] = await Promise.all([
       Blog.countDocuments(),
       Destination.countDocuments(),
       Package.countDocuments(),
       Contact.countDocuments(),
       Booking.countDocuments(),
-      Category.countDocuments(),
       Search.countDocuments(),
       Contact.countDocuments({ status: 'new' }),
       Booking.countDocuments({ status: 'pending' }),
@@ -26,7 +24,7 @@ const getStats = async (req, res) => {
     const recentContacts = await Contact.find().sort({ createdAt: -1 }).limit(5)
 
     return success(res, {
-      stats: { blogs, destinations, packages, contacts, bookings, categories, searches, newContacts, pendingBookings, confirmedBookings },
+      stats: { blogs, destinations, packages, contacts, bookings, searches, newContacts, pendingBookings, confirmedBookings },
       recentBookings,
       recentContacts,
     })

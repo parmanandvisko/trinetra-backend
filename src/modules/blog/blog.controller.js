@@ -8,14 +8,14 @@ const getAll = async (req, res) => {
     if (status) filter.status = status
     if (search) filter.title = { $regex: search, $options: 'i' }
     const total = await Blog.countDocuments(filter)
-    const blogs = await Blog.find(filter).populate('category', 'name').sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
+    const blogs = await Blog.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
     return paginated(res, blogs, total, page, limit)
   } catch (err) { return error(res, err.message) }
 }
 
 const getOne = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate('category', 'name')
+    const blog = await Blog.findById(req.params.id)
     if (!blog) return error(res, 'Blog not found', 404)
     return success(res, blog)
   } catch (err) { return error(res, err.message) }

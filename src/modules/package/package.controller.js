@@ -10,14 +10,14 @@ const getAll = async (req, res) => {
     if (isActive !== undefined) filter.isActive = isActive === 'true'
     if (search) filter.title = { $regex: search, $options: 'i' }
     const total = await Package.countDocuments(filter)
-    const packages = await Package.find(filter).populate('destination', 'name').populate('category', 'name').sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
+    const packages = await Package.find(filter).populate('destination', 'name').sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
     return paginated(res, packages, total, page, limit)
   } catch (err) { return error(res, err.message) }
 }
 
 const getOne = async (req, res) => {
   try {
-    const pkg = await Package.findById(req.params.id).populate('destination category')
+    const pkg = await Package.findById(req.params.id).populate('destination')
     if (!pkg) return error(res, 'Package not found', 404)
     return success(res, pkg)
   } catch (err) { return error(res, err.message) }
