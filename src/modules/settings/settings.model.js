@@ -24,6 +24,7 @@ const settingsSchema = new mongoose.Schema({
     location: { type: String, maxlength: 60 },
     text: { type: String, maxlength: 220 },
     img: { type: String, maxlength: 250 },
+    rating: { type: Number, default: 5, min: 1, max: 5 },
   }],
 
   // Social Links
@@ -36,13 +37,13 @@ const settingsSchema = new mongoose.Schema({
   // Hero Section
   heroTitle: { type: String, default: 'Where Would You Like To Go?', maxlength: 65 },
   heroSubtitle: { type: String, default: 'One life. Many destinations', maxlength: 45 },
-  heroBg: { type: String, default: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&auto=format&fit=crop', maxlength: 250 },
+  heroBg: { type: String, default: '', maxlength: 250 },
 
   // About Us
   aboutTitle: { type: String, default: 'About Trinetra Global Holidays', maxlength: 65 },
   aboutSubtitle: { type: String, default: 'Your Trusted Travel Partner Since 2009', maxlength: 80 },
   aboutDescription: { type: String, default: 'Trinetra Global Holidays is a leading travel company based in Ambernath, Maharashtra. With over 15 years of experience, we have helped thousands of travelers explore the world.', maxlength: 1200 },
-  aboutImage: { type: String, default: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&auto=format&fit=crop', maxlength: 250 },
+  aboutImage: { type: String, default: '', maxlength: 250 },
   teamMembers: [{
     name: { type: String, maxlength: 45 },
     role: { type: String, maxlength: 55 },
