@@ -23,12 +23,30 @@ const fileFilter = (_, file, cb) => {
 }
 
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } })
+const mediaFilter = (_, file, cb) => {
+  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) return cb(null, true)
+  cb(new Error('Only image and video files are allowed'))
+}
+const mediaUpload = multer({ storage, fileFilter: mediaFilter, limits: { fileSize: 50 * 1024 * 1024 } })
 
 router.post('/image', protect, upload.single('image'), (req, res) => {
   try {
     if (!req.file) return error(res, 'Image file is required', 400)
     const baseUrl = `${req.protocol}://${req.get('host')}`
     return success(res, { url: `${baseUrl}/uploads/${req.file.filename}` }, 'Image uploaded', 201)
+  } catch (err) {
+    return error(res, err.message)
+  }
+})
+
+router.post('/media', protect, mediaUpload.single('media'), (req, res) => {
+  try {
+    if (!req.file) return error(res, 'Media file is required', 400)
+    const baseUrl = `${req.protocol}://${req.get('host')}`
+    return success(res, {
+      url: `${baseUrl}/uploads/${req.file.filename}`,
+      mediaType: req.file.mimetype.startsWith('video/') ? 'video' : 'image',
+    }, 'Media uploaded', 201)
   } catch (err) {
     return error(res, err.message)
   }

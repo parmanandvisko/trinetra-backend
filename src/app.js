@@ -13,6 +13,8 @@ const dashboardRoutes = require('./modules/dashboard/dashboard.routes')
 const settingsRoutes = require('./modules/settings/settings.routes')
 const uploadRoutes = require('./modules/upload/upload.routes')
 const searchRoutes = require('./modules/search/search.routes')
+const quotationDownloadRoutes = require('./modules/quotation-download/quotation-download.routes')
+const galleryRoutes = require('./modules/gallery/gallery.routes')
 
 const app = express()
 
@@ -39,6 +41,8 @@ app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/settings', settingsRoutes)
 app.use('/api/uploads', uploadRoutes)
 app.use('/api/searches', searchRoutes)
+app.use('/api/quotation-downloads', quotationDownloadRoutes)
+app.use('/api/gallery', galleryRoutes)
 
 app.get('/api/health', (_, res) => res.json({ status: 'OK', message: 'Trinetra API is running' }))
 

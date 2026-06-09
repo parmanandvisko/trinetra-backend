@@ -7,6 +7,7 @@ const packageSchema = new mongoose.Schema(
     duration: { type: String, required: true },
     price: { type: Number, required: true },
     originalPrice: { type: Number },
+    discount: { type: Number, default: 0, min: 0, max: 100 },
     description: { type: String, default: '' },
     image: { type: String, default: '' },
     images: [{ type: String }],

@@ -10,7 +10,7 @@ const getAll = async (req, res) => {
     const total = await Booking.countDocuments(filter)
     const bookings = await Booking.find(filter).populate('package', 'title price').sort({ createdAt: -1 }).skip((page - 1) * limit).limit(Number(limit))
     return paginated(res, bookings, total, page, limit)
-  } catch (err) { return error(res, err.message) }
+  } catch (err) { return error(res, err.message) } 
 }
 
 const create = async (req, res) => {
